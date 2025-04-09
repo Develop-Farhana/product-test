@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="mb-3 d-flex justify-content-between">
-        <form action="{{ route('products.search') }}" method="GET" class="d-flex">
-            <input type="text" name="query" class="form-control me-2" placeholder="Search by product name">
-            <button type="submit" class="btn btn-primary">Search</button>
+        <form method="GET" class="mb-3">
+            <input type="text" name="search" value="{{ $search }}" placeholder="Search by name ">
+            <button type="submit">Search</button>
         </form>
         <div>
             <a href="{{ route('products.create') }}" class="btn btn-success">Add Product</a>

@@ -18,6 +18,5 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::resource('products', ProductController::class);
-Route::get('products/search', [ProductController::class, 'search'])->name('products.search');
 Route::post('products/{id}/add-to-cart', [CartController::class, 'addToCart'])->name('cart.add');
 Route::get('cart', [CartController::class, 'index'])->name('cart.index');

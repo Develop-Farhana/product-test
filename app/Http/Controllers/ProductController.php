@@ -10,12 +10,19 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-        $products = Product::all();
-        return view('products.index', compact('products'));
+        $search = $request->input('search');
+
+        $products = Product::when($search, function ($query, $search) {
+            return $query->where('name', 'like', "%{$search}%");
+            // You can add more conditions like:
+            // ->orWhere('category', 'like', "%{$search}%");
+        })->paginate(10);
+
+        return view('products.index', compact('products', 'search'));
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -94,10 +101,5 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product deleted.');
     }
 
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
-        $products = Product::where('name', 'like', '%' . $query . '%')->get();
-        return view('products.index', compact('products'));
-    }
+
 }
